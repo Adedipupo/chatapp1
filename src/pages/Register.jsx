@@ -12,8 +12,8 @@ import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [err, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
 
 
   const handleSubmit = async (e) => {
@@ -24,8 +24,8 @@ const Register = () => {
     const file = e.target[3].files[0];
 
     try {
+      setLoading(true);
       const res = await createUserWithEmailAndPassword(auth, email, password);
-      console.log("res", res);
 
       const storageRef = ref(storage, displayName);
 
@@ -37,7 +37,6 @@ const Register = () => {
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-            console.log("File available at", downloadURL);
             await updateProfile(res.user, {
               displayName,
               photoURL: downloadURL,
@@ -49,12 +48,14 @@ const Register = () => {
               photoURL: downloadURL,
             });
             await setDoc(doc(db, "userChats", res.user.uid), {});
+            setLoading(false);
             navigate("/");
           });
         }
       );
     } catch (error) {
       setError(true);
+      setLoading(false);
     }
   }
     return (
@@ -62,6 +63,7 @@ const Register = () => {
         <div className="formWrapper">
           <span className="logo">myChat</span>
           <span className="title">Register</span>
+          {err && <span style={{color: 'red'}}>Something went wrong</span>}
           <form onSubmit={handleSubmit}>
             <input type="text" placeholder="display name" />
             <input type="email" placeholder="email" />
@@ -71,8 +73,7 @@ const Register = () => {
               <img src={Add} alt="true" />
               <span>Add an avatar</span>
             </label>
-            {err && <span>Something went wrong</span>}
-            <button>Sign up</button>
+            <button>{loading ? "Loading..." : "Sign up"}</button>
           </form>
           <p>Already have an account? Login</p>
         </div>
