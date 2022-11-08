@@ -31,7 +31,7 @@ const Login = () => {
       <div className="formWrapper">
         <span className="logo">myChat</span>
         <span className="title">Login</span>
-        {err && <span style={{color: 'red'}}> </span>}
+        {err && <span style={{color: 'red'}}>Something went wrong</span>}
         <form onSubmit={handleLogin}>
             <input type="email" placeholder="email" />
             <input type="password" placeholder="password " />

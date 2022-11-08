@@ -5,7 +5,6 @@ import { AuthContext } from '../context/AuthContext'
 
 export const Navbar = () => {
   const {currentUser} = useContext(AuthContext);
-  console.log("first",currentUser);
    return (
     <div className="navbar">
       <span className="logo">Dipo Chat</span>
