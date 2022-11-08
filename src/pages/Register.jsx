@@ -8,7 +8,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore"; 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [err, setError] = useState(false);
@@ -75,7 +75,7 @@ const Register = () => {
             </label>
             <button>{loading ? "Loading..." : "Sign up"}</button>
           </form>
-          <p>Already have an account? Login</p>
+          <p>Already have an account? <Link to="/login">Login</Link></p>
         </div>
       </div>
     );

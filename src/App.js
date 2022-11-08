@@ -7,15 +7,30 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 
 function App() {
-  const {currentUser} = useContext(AuthContext)
-  
-  console.log("currentUser",currentUser)
+  const { currentUser } = useContext(AuthContext)
+
+  const ProtectedRoute = ({ children }) => {
+    if (!currentUser) {
+      return <Navigate to="/login" />
+    }
+    return children
+  }
+
   return (
-    <> 
+    <>
       <Routes>
-        <Route path="/" exact element={currentUser ?<Home /> : <Navigate to="/login" />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Register />} />
+        <Route path="/">
+          <Route
+             index
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute> 
+            }
+          />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Register />} />
+        </Route>
       </Routes>
     </>
   )

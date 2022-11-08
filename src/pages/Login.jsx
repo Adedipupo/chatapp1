@@ -1,6 +1,6 @@
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
 
 const Login = () => {
@@ -37,7 +37,7 @@ const Login = () => {
             <input type="password" placeholder="password " />
             <button>{loading ? "Loading..." : "Log in"}</button>
         </form>
-        <p>You do not have an account? Sign up</p>
+        <p>You do not have an account? <Link to="/signup">Sign up</Link></p>
       </div>
     </div>
   )
